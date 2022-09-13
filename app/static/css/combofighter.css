@@ -1,0 +1,99 @@
+html {height:100%; width:100%; padding: 0px; margin:0px}
+body {height:100%; width:100%; padding: 0px; margin:0px; font: 13px Helvetica, Arial; }
+#container {display:flex; overflow-x:hidden; overflow-y:hidden; height:100%; width:100%}
+
+#game {display:flex; flex:7; flex-direction: column; margin:0; padding: 3px;} 
+
+#title_bar {width:100%;}
+#user_info { display:inline; float:right;}
+#logo_click { font-size:25px; color:inherit; text-decoration:inherit; font-weight:inherit }
+#logo_click:hover { text-shadow: 0px 0px 3px #ACACAC }
+#volume_controls{display:inline}
+#speaker_icon {height:100%;width:14px; cursor:pointer; vertical-align:middle}
+#volume_slider {display:none}
+
+#game_winner_box {margin:auto; text-align: center; vertical-align:middle; display:none} 
+#game_winner_info { text-align:center; font-size:60px ; width:100%; margin:auto}
+#game_winner_time { text-align:center; padding: 10px}
+
+#idle_box {margin:auto; text-align: center; vertical-align:middle; display:none} 
+#idle_box_info { text-align:center; font-size:40px ; margin:auto}
+
+#loading_box {margin:auto} 
+#loading_icon {height:100px; width:100px; }
+
+#game_body { display:none; flex-direction:column; justify-content:space-between; height:100% } 
+#round { display:flex; flex:1; flex-direction:column; justify-content:center; text-align:center; margin:auto} 
+#rtitle {font-weight:bold; padding:6px}
+#prompts_desc{text-align: center; padding:15px}
+#prompts{display:flex; flex:12;  }
+#prompts_table { width:100% ;  border-spacing: 10px;   border-collapse: separate; table-layout:fixed; text-align:center; font-size:13px}
+#prompts_table .letters {}
+#remaining {display:flex; flex:0.4; justify-content:center; flex-direction:column; text-align:center; margin:auto}
+#rseconds {display:inline}
+#time_descriptor {padding-right:5px}
+#word_entry {display:flex; flex:2; flex-direction:column; justify-content:center}
+#word_entry_area { display:flex; flex-direction:column; height:50%; width:100% }
+
+#word_entry_box {
+    margin: 0 auto 15px auto;
+	height: 30px;
+    width: 50%;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    border-radius: 20px;
+    font-size: 24px;
+	color: #EEEEEE;
+    text-align: center;
+    outline: none;
+    padding: 6px;
+	border:10px;
+	text-transform:uppercase;
+}
+
+#word_score {
+	margin: auto auto 0 auto;
+	height: 14px;
+	width:50px;
+    background: rgba(120,120,120,0.7);
+	font-size:9px;
+    border: none;
+    border-radius: 20px 20px 0 0;
+    font-size: 11px;
+	color: #EEEEEE;
+	vertical-align:bottom;
+    text-align: center;
+    outline: none;
+    padding: 2px;
+	border:3px;
+	text-transform:uppercase;
+}
+#word_entry_reply { height:50%; text-align:center; margin:10px auto auto auto; }
+#winner_box {margin:auto; word-wrap: break-word}
+#winner {text-align:center}
+#results {display:flex; flex:2; flex-direction:row;  overflow-y: auto; }
+#results_table { width:80%; padding:15px; vertical-align:middle; table-layout:fixed; border-collapse:collapse}
+.round_ready_check { text-align:center; width:100%; vertical-align:middle } 
+.round_ready_check .user_name {color: gray; }
+.results_user_left_arrow {visibility:hidden; cursor:default}
+.results_user_right_arrow {visibility:hidden; cursor:default}
+.user_round_word { text-align:center; width:100% ; vertical-align:middle; word-wrap: break-word}
+.user_score {text-align:center; width:100%; vertical-align:middle}
+.my_scoreboard_row .user_name{ padding-left: 20%; padding-right: 20%; }
+.my_scoreboard_row .results_user_right_arrow {visibility:visible;}
+/*
+.my_scoreboard_row {    background: -webkit-linear-gradient(left, rgba(222,22,22,0.2) 0%, rgba(222,222,222,0) 20%, rgba(222,222,222,0) 80%, rgba(222,222,222,1) 100%); 
+    background-attachment:fixed;}
+*/
+#best_word{display:flex; flex:0.5; padding:15px; visibility:visible}
+
+#chat {display:flex; flex:3; flex-direction:column; border: 3px solid gray ; border-radius:5px ; margin:0; padding:3px;}
+#chat * { margin: 0; box-sizing: border-box; }
+#chat_textbox{height: 60px; font: 13px Helvetica, Arial; }
+#messages {list-style-type: none; overflow-y:auto ; overflow-x:hidden ; word-wrap: break-word; width:100%; height:100%; padding-left:0px}
+.chat_timestamp { color:gray; font-size:10px; vertical-align:middle; padding-right:4px }
+.user_name {font-weight:bold}
+.admin {color:#B22222}
+.system_message {font-style:italic}
+#messages li { padding: 3px}
+#messages li:nth-child(even) { background: #eee; }

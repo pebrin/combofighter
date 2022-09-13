@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ComboFighter</title>
+	<link rel="stylesheet" type="text/css" href="/css/combofighter.css">
+	<script src="/js/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/js/color.js"></script>
+	<script src="/js/combofighter.js"></script>
+	<script>
+		init_vars({{data|tojson}});
+	</script>
+  </head>
+  <body>
+	<div id="container">
+		<div id="game">
+			<div id="title_bar"><a id="logo_click" href="/">ComboFighter</a> alpha 1 edition
+				<div id="user_info">Your name is   <span id="comboname" class="user_name">Loading...</span>
+					<div id="volume_controls">
+				<img id="speaker_icon" src="/images/Speaker_Icon.svg"><input id="volume_slider" type="range" min="0" max="100" step="5" value="50">
+					</div>
+				</div>
+			</div>
+			<div id="game_winner_box">
+				<span id="game_winner_info"></span>
+				<div id="game_winner_time">Next game in: <span id="next_game_time"></span></div>
+			</div>
+			<div id="idle_box">
+				<span id="idle_box_info">Waiting on players to join...</span>
+			</div>
+			<div id="loading_box">
+				<img id="loading_icon" src="/images/spin.svg">
+			</div>
+			<div id="game_body">
+				<div id="round"><div id="rtitle">{{data['game_name']}}</div><div id="rinfo">Round <span id="rnumber">1</span> of <span id="rtotal">{{ data['NUM_ROUNDS'] }}</span></div></div>
+				<div id="Prompts">
+					<div id="prompts_desc">The prompts for this round are...</div>
+					<table id="prompts_table">
+					</table>
+				</div>
+				<div id="remaining"><div><span id="time_descriptor">Time remaining: </span><span id="rseconds"></span></div></div>
+				<div id="word_entry">
+					<div id="word_entry_area">
+						<span id="word_score">0</span><span id="word_entry_box" contentEditable="true" maxlength="30"></span>
+					</div><div id="word_entry_reply"></div>
+				</div>
+				<div id="results">
+					<table id="results_table">
+						<thead>
+						<tr>
+							<th align="center" valign="middle">Player</th>
+							<th align="center" valign="middle">Word</th>
+							<th align="center" valign="middle">Score</th>
+						</tr>
+						</thead>
+						<tbody id="results_table_body">
+						</tbody>
+					</table>
+					<div id="winner_box"><span id="round_win_desc">This round's winner is </span><div id="winner" class="user_name"><b></b></div></div>
+				</div>
+				<div id="best_word">The best possible word was </div>
+			</div>
+		</div>
+
+		<div id="chat">
+		<ul id="messages">
+		</ul>
+		<textarea id="chat_textbox" autocomplete="off" placeholder="Type here to chat!" /></textarea>
+		</div>
+
+	</div>
+  </body>
+</html>

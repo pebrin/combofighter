@@ -1,0 +1,12 @@
+#header{width:100%; text-align:center}
+#Obnoxious_randomly_generated_title_that_serves_no_apparent_purpose_also_this_id_is_very_long{text-align:center; font: 20px Helvetica, Arial; font-weight:bold; margin:auto; padding:50px; display:inline-block}
+#container{height:100%; width:100%; margin:auto; text-align:center; display:inline-block;}
+.headline{font-family: Courier; font-size:16px }
+.game_item{padding:2px}
+#active_games{list-style-type: none;padding:2px; margin-top:5px; margin-bottom:15px}
+#active_games a { text-decoration:none; color: #00008B }
+#active_games a:hover { text-shadow: 0px 0px 1px #585b7a }
+#create_game * {padding:5px}
+#inspiration {font-size: 10px; color:#BABABA; padding:4px}
+#inspiration a { text-decoration:none; color: #00008B }
+/*#inspiration a:hover { text-shadow: 0px 0px 1px #585b7a }*/

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{data['title']}}</title>
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<script>
+	window.onload = function () {
+		document.getElementById("room_entry").addEventListener("submit", function (e) {
+			e.preventDefault();
+			window.location = "{{data['url']}}"+document.getElementById("room_entry_input").value;
+		});
+	};
+	</script>
+  </head>
+  <body>
+	<div id="header">
+		<span id="Obnoxious_randomly_generated_title_that_serves_no_apparent_purpose_also_this_id_is_very_long">{{ data['title'] }}</span>
+	</div>
+	<div id="container">
+		<div id="games_list">
+			<span class="headline">Active rooms:</span>
+			<ul id="active_games">
+				{% for item in data['games'] %}
+				<li class="game_item">({{ item.users | length }}) <a href="{{ item.room_name }}" target="_blank">{{ item.game_name }} ({{ item.type }})</a> </li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div id="create_game">
+			<span class="headline">Create your own room: </span>
+			<form id="room_entry">
+				<input id="room_entry_input" pattern="[a-zA-Z0-9_]+" title="Letters, numbers, and underscores only!" placeholder="Enter room name" maxlength="30">
+				<select>
+					<option value="ComboFighter">ComboFighter</option>
+					<option disabled>... more coming soon?</option>
+				</select>
+			</form>
+		</div>
+		<div id="inspiration">Inspired by friends at <a href="http://bombparty.sparklinlabs.com/" target="_blank">Sparklin Labs</a> and <a href="http://pseudo.skandbrand.com/" target="_blank">Pseudo Bomb Party</a></div>
+	</div>
+  </body>
+</html>
