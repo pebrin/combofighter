@@ -63,6 +63,7 @@ def spawn_game(game_name):
 		return game_name + " is not a valid name!", 400
 	# room_name=request.base_url
 	room_name=request.url
+	print("Log: creating room with name " + room_name)
 	if room_name not in rooms:
 		print("Creating new ComboFighter instance at " + room_name)
 		game = ComboFighter(app=app, index_entry=(rooms, rooms_lock), room_name=room_name, game_name=game_name, socketio=socketio)
