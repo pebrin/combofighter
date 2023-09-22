@@ -17,11 +17,13 @@ prompt2word = {}
 words_permissive=set() #permissive dico against which we check prompts
 
 
+# TODO: why am i encoding and decoding things here?
 for line in dico_american:
 	if '\'' not in line and line[0].islower():
 		word = unicodedata.normalize('NFKD', line).encode('ascii', 'ignore')
 		word = word.strip()
 		word = word.lower()
+		word = word.decode("utf-8")
 		words.add(word)
 		words_permissive.add(word)
 
@@ -30,6 +32,7 @@ for line in dico_british:
 		word = unicodedata.normalize('NFKD', line).encode('ascii', 'ignore')
 		word = word.strip()
 		word = word.lower()
+		word = word.decode("utf-8")
 		if word not in words:
 			words.add(word)
 			words_permissive.add(word)
@@ -39,6 +42,7 @@ for line in dico_pseudo:
 		word = unicodedata.normalize('NFKD', line).encode('ascii', 'ignore')
 		word = word.strip()
 		word = word.lower()
+		word = word.decode("utf-8")
 		if word not in words_permissive:
 			words_permissive.add(word)
 		
@@ -49,7 +53,7 @@ for word in words:
 	for i in range(len(word)-1):
 	    pair = word[i:i+2]
 	    if len(pair) != 2:
-	        print word
+	        print(word)
 	        break
 	    if pair in counts:
 	        counts[pair]+=1
@@ -63,7 +67,7 @@ for word in words:
 	for i in range(len(word)-2):
 	    trip = word[i:i+3]
 	    if len(trip)!=3:
-	        print word
+	        print(word)
 	        break
 	    if trip in counts:
 	        counts[trip]+=1
@@ -79,14 +83,16 @@ c_vals = sorted(counts.values(),reverse=True)
 cum_c_vals = [sum(c_vals[0:i]) for i in range(1,len(c_vals)+1)]
 
 def get_random_word():
-	return random.sample(words,1)[0]	
+	# TODO: why does this require a conversion to a list?
+	return random.sample(list(words),1)[0]
 
 def find_closest(l,n):
 	imax = len(l)-1
 	imin = 0
 	while ((imax - imin)!=1):
 		#print imin, imax
-		i = (imax+imin)/2
+		# i = (imax+imin)/2
+		i = (imax+imin)//2
 		if l[i]<n:
 			imin=i
 		elif l[i]>n:

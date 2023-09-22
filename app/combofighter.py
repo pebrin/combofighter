@@ -257,7 +257,8 @@ class ComboFighter:
 						emit('system_message', word + ' is not in the current dictionary.', broadcast=True, room=self.room_name)
 				elif command == "!def":
 					error_message="Usage: !def &lt;word(s)&gt;"
-					emit('system_message', "Retrieving definition. Please wait a few moments...", broadcast=True, room=self.room_name)
+					# emit('system_message', "Retrieving definition. Please wait a few moments...", broadcast=True, room=self.room_name)
+					emit('system_message', "The !def command is currently unavailable. Please try again later.", broadcast=True, room=self.room_name)
 					self.socketio.start_background_task(target=chattools.fetch_and_send_defn, word=" ".join(args), socketio=self.socketio, msg_type="system_message", room=self.room_name)
 				elif command == "!setRoundTime":
 					if not auth:
@@ -327,18 +328,18 @@ class ComboFighter:
 						emit('system_message', error_message, broadcast=True, room=self.room_name)
 		except:
 			#raise
-			print "emitting system message: " + error_message
+			# print "emitting system message: " + error_message
 			emit('system_message', error_message, broadcast=True, room=self.room_name)
 			#e = sys.exc_info()[0]
 
 	def eval_submission(self, message):
 		user = self.get_user(uid=request.sid)
 		message = message.strip().lower()
-		print "received " + message + " from user " + user.name
+		# print "received " + message + " from user " + user.name
 		if len(message)>30:
 			message=message[:30]
 		pretty_score_message, score = dicotools.pretty_score(self.prompts_list, message)
-		print "score: " + pretty_score_message
+		# print "score: " + pretty_score_message
 		#this is a bad way of doing this but not like i expect more than 2 people to be on my server ever
 		for entry in self.results_list:
 			if entry[0] == request.sid:
@@ -386,7 +387,7 @@ class ComboFighter:
 			
 		self.prompts_list = sorted(self.prompts_list, key=itemgetter(1))
 		self.next_event_time = self.round_time
-		print self.room_name + " starting round " +str(self.round_number)+"/"+str(self.num_rounds)+" with prompts: "+str(self.prompts_list)
+		# print self.room_name + " starting round " +str(self.round_number)+"/"+str(self.num_rounds)+" with prompts: "+str(self.prompts_list)
 		self.socketio.emit('round_start', {'prompts':self.prompts_list, 'time':self.next_event_time-1, 'cround':self.round_number, 'trounds':self.num_rounds}, room=self.room_name) #take off 1 second to account for lag?
 
 		self.socketio.start_background_task(target=self.prepare_best_word)
@@ -407,10 +408,10 @@ class ComboFighter:
 		self.server_state = ComboFighter.state.round_end
 		high_score=max(self.results_list, key=itemgetter(3))[3]
 		self.winners = [elt[1] for elt in self.results_list if elt[3]==high_score and high_score>0]
-		print "high score is: " + str(high_score) + ", winners are: " + str(self.winners)
+		# print "high score is: " + str(high_score) + ", winners are: " + str(self.winners)
 		self.results_list = sorted(self.results_list, key=itemgetter(4), reverse=True)
 		self.last_round_results_list = copy.deepcopy(self.results_list)
-		print "results for the round: " + str(self.results_list)
+		# print "results for the round: " + str(self.results_list)
 		self.next_event_time = self.round_results_time
 		self.socketio.emit('round_end', {'prompts':self.prompts_list, 'time':self.next_event_time-1, 'scoreboard':self.results_list, 'bestword':self.best_word_message, 'cround':self.round_number, 'trounds':self.num_rounds, 'winner':self.winners}, room=self.room_name) #take off 1 second to account for lag?
 		while (self.next_event_time > 0):
@@ -434,7 +435,7 @@ class ComboFighter:
 			self.room_active = False
 			return
 		self.round_number = 1
-		print "Starting new game at " +self.room_name
+		# print "Starting new game at " +self.room_name
 		self.results_list = []
 		for user in self.users:
 			self.results_list.append([user.uid, user.name, -1, 0, 0])
@@ -443,11 +444,11 @@ class ComboFighter:
 
 	def end_game(self):
 		if len(self.results_list) > 0:
-			print self.results_list[0][1] + " wins!"
+			print(self.results_list[0][1] + " wins!")
 		self.next_event_time = self.game_results_time
 		high_score=max(self.results_list, key=itemgetter(4))[4]
 		self.winners = [elt[1] for elt in self.results_list if elt[4]==high_score and high_score>0]
-		print "high score is: " + str(high_score) + ", winners are: " + str(self.winners)
+		# print "high score is: " + str(high_score) + ", winners are: " + str(self.winners)
 		self.socketio.emit('game_end', {'time':self.next_event_time-1,'results':self.results_list, 'winner':self.winners}, room=self.room_name)
 		while (self.next_event_time > 0):
 			if len(self.users) == 0:
@@ -481,7 +482,7 @@ class ComboFighter:
 
 	def idle(self):
 		self.server_state = ComboFighter.state.idle
-		print self.room_name + " is now idling."
+		# print self.room_name + " is now idling."
 		self.socketio.emit('idle', {'msg':"Waiting for players to join."}, room=self.room_name)
 		while not self.game_active:
 			if len(self.users)==0:
@@ -494,7 +495,7 @@ class ComboFighter:
 		self.index_lock.acquire()
 		del self.index[self.room_name]
 		self.index_lock.release()
-		print self.room_name + ": No more users remaining. Shutting down."
+		# print self.room_name + ": No more users remaining. Shutting down."
 
 	def prepare_best_word(self):
 		best_word = dicotools.combofighter_solver(self.prompts_list)
@@ -503,7 +504,7 @@ class ComboFighter:
 		
 
 	def handle_event(self, event, *args):
-		print "ComboFighter instance at " + self.room_name + " handling " + event + " by " + request.sid +  "  with params: " + str(args)
+		# print "ComboFighter instance at " + self.room_name + " handling " + event + " by " + request.sid +  "  with params: " + str(args)
 		#server side events: 'connect disconnect chat_message gameplay_user_submit join_game leave_game'
 		if event == self.server_events.connect.name:
 			self.register_user()
@@ -518,7 +519,7 @@ class ComboFighter:
 		elif event == self.server_events.leave_game.name:
 			self.leave_game(args[0])
 		else:
-			print "Error: Room " + self.room_name + " received a request it can't handle!"
+			print("Error: Room " + self.room_name + " received a request it can't handle!")
 
 class User:
 	def __init__(self, uid, name=None, in_game=True, is_admin=False):

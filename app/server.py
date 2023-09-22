@@ -63,7 +63,7 @@ def spawn_game(game_name):
 		return game_name + " is not a valid name!", 400
 	room_name=request.base_url
 	if room_name not in rooms:
-		print "Creating new ComboFighter instance at " + room_name
+		print("Creating new ComboFighter instance at " + room_name)
 		game = ComboFighter(app=app, index_entry=(rooms, rooms_lock), room_name=room_name, game_name=game_name, socketio=socketio)
 		rooms[room_name] = game
 		socketio.start_background_task(target=game.setup)
@@ -78,19 +78,19 @@ def create_event_router(event):
 			if room_name in rooms:
 				rooms[room_name].handle_event(event, *args)
 			else:
-				print "Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!"
+				print("Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!")
 		except:
-			print "Error in handling event. Aborting..."
+			print("Error in handling event. Aborting...")
 			e_type, e_value, e_traceback = sys.exc_info()
-			print e_type
-			print e_value
-			print e_traceback
+			print(e_type)
+			print(e_value)
+			print(e_traceback)
 			raise
 	return event_router
 
 if __name__ == "__main__":
 	def signal_handler(signum, frame):
-		socketio.emit("system_message", "Alert: Heroku is restarting this server soon. Your game will be interrupted. Please wait a minute or two and then try rejoining.")
+		socketio.emit("system_message", "Alert: This server is restarting soon. Your game will be interrupted. Please wait a minute or two and then try rejoining.")
 	signal.signal(signal.SIGTERM, signal_handler)
 		
 	for event in active_event_types:
