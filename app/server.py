@@ -81,7 +81,9 @@ def create_event_router(event):
 			if room_name in rooms:
 				rooms[room_name].handle_event(event, *args)
 			else:
-				print("Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!")
+				# TODO: find better long-term solution, also FIXME this is probably broken
+				spawn_game(room_name[room_name[::-1].find('/'):])
+				# print("Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!")
 		except:
 			print("Error in handling event. Aborting...")
 			e_type, e_value, e_traceback = sys.exc_info()
