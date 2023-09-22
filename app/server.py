@@ -61,7 +61,8 @@ def send_image(image_file):
 def spawn_game(game_name):
 	if not dicotools.all_letters_or_numbers_or_underscores(game_name) or not len(game_name)<=30:
 		return game_name + " is not a valid name!", 400
-	room_name=request.base_url
+	# room_name=request.base_url
+	room_name=request.url
 	if room_name not in rooms:
 		print("Creating new ComboFighter instance at " + room_name)
 		game = ComboFighter(app=app, index_entry=(rooms, rooms_lock), room_name=room_name, game_name=game_name, socketio=socketio)
