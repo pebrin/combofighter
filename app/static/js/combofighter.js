@@ -662,7 +662,6 @@ socket.on('idle', function(msg){
 socket.on('connect_message', function(msg){
 	add_system_message('<span class="user_name">' + msg['name'] + "</span> has joined the fight!");
 	add_user_to_scoreboard(msg['id'], msg['name']);
-	test_var = msg
 });
 
 socket.on('disconnect_message', function(msg){
