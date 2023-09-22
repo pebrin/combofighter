@@ -3,7 +3,7 @@ blinker==1.6.2
 click==8.1.7
 dnspython==2.3.0
 eventlet==0.33.3
-Flask==2.3.3
+Flask==2.2.5
 Flask-SocketIO==5.3.6
 greenlet==2.0.2
 h11==0.14.0
