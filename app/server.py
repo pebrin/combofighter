@@ -27,6 +27,7 @@ active_event_types = [event.name for event in ComboFighter.server_events]
 
 @app.route('/')
 def main():
+	print("Log: received any request")
 	sorted_games = sorted(rooms.values(), key=lambda x:len(x.users), reverse=True)
 	return render_template('index.html', data={'games':sorted_games, 'title':dicotools.random_lab_title(), 'url':url_for('spawn_game', game_name="", _external=True, _scheme='https')})
 
