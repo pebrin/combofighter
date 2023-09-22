@@ -18,6 +18,13 @@ import dicotools
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = None #redacted
+
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+app.wsgi_app = ProxyFix(
+	app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
+
 socketio = SocketIO(app)
 
 rooms = {}
@@ -82,8 +89,8 @@ def create_event_router(event):
 				rooms[room_name].handle_event(event, *args)
 			else:
 				# TODO: find better long-term solution, also FIXME this is probably broken
-				spawn_game(room_name[room_name[::-1].find('/'):])
-				# print("Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!")
+				# spawn_game(room_name[room_name[::-1].find('/'):])
+				print("Ignoring event " + event + " in room " + room_name + " by user " + request.sid + " - room doesn't exist!")
 		except:
 			print("Error in handling event. Aborting...")
 			e_type, e_value, e_traceback = sys.exc_info()
@@ -101,5 +108,6 @@ if __name__ == "__main__":
 	for event in active_event_types:
 		router = create_event_router(event)
 		socketio.on_event(event, router)
+
 	port = int(os.environ.get("PORT", 5000))
 	socketio.run(app, host='0.0.0.0', port=port, debug=True)
