@@ -34,9 +34,9 @@ active_event_types = [event.name for event in ComboFighter.server_events]
 
 @app.route('/')
 def main():
-	print("Log: received any request")
+	# print("Log: received any request")
 	sorted_games = sorted(rooms.values(), key=lambda x:len(x.users), reverse=True)
-	return render_template('index.html', data={'games':sorted_games, 'title':dicotools.random_lab_title(), 'url':url_for('spawn_game', game_name="", _external=True, _scheme='https')})
+	return render_template('index.html', data={'games':sorted_games, 'title':dicotools.random_lab_title(), 'url':url_for('spawn_game', game_name="", _external=True)})
 
 #Treat socket.io separately -- want users to cache it.
 @app.route('/js/socket.io.js')
@@ -69,8 +69,8 @@ def send_image(image_file):
 def spawn_game(game_name):
 	if not dicotools.all_letters_or_numbers_or_underscores(game_name) or not len(game_name)<=30:
 		return game_name + " is not a valid name!", 400
-	# room_name=request.base_url
-	room_name=request.url
+	room_name=request.base_url
+	# room_name=request.url
 	print("Log: creating room with name " + room_name)
 	if room_name not in rooms:
 		print("Creating new ComboFighter instance at " + room_name)
